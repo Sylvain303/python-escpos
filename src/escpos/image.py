@@ -92,11 +92,29 @@ class EscposImage(object):
             yield(im_bytes)
             left += line_height
 
-    def to_raster_format(self):
+    def reverse_bits(n, no_of_bits):
+        result = 0
+        for i in range(no_of_bits):
+            result <<= 1
+            result |= n & 1
+            n >>= 1
+        return result
+
+    def to_raster_format(self, invert_byte=False):
         """
         Convert image to raster-format binary
         """
-        return self._im.tobytes()
+        all_bytes = self._im.tobytes()
+        print(self.width_bytes)
+        if invert_byte:
+            new_bytes = [ EscposImage.reverse_bits(b, 8) for b in bytearray(all_bytes) ] 
+            #new_bytes = []
+            #for i in range(0, len(all_bytes)-1, 2):
+            #   new_bytes.append(EscposImage.reverse_bit(all_bytes[i+1]))
+            #   new_bytes.append(EscposImage.reverse_bit(all_bytes[i]))
+            return bytes(new_bytes)
+        else:
+            return all_bytes
 
     def split(self, fragment_height):
         """

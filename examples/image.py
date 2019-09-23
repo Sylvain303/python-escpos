@@ -1,8 +1,5 @@
 import sys
 
-b = sys.path
-sys.path = [ '/home/pi/Printer/python-escpos/build/lib' ] + b
-
 from escpos.printer import Usb, File
 
 def usage():
@@ -19,4 +16,4 @@ if __name__ == '__main__':
     # Adapt to your needs
     #p = Usb(0x0416, 0x5011, profile="POS-5890")
     p = File("output")
-    p.image(content,  invert_byte=False)
+    p.image(content,  invert_byte=True)

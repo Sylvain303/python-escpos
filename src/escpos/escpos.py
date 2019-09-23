@@ -90,7 +90,7 @@ class Escpos(object):
         raise NotImplementedError()
 
     def image(self, img_source, high_density_vertical=True, high_density_horizontal=True, impl="bitImageRaster",
-              fragment_height=960, center=False):
+              fragment_height=960, center=False, invert_byte=False):
         """ Print an image
 
         You can select whether the printer should print in high density or not. The default value is high density.
@@ -146,7 +146,7 @@ class Escpos(object):
             density_byte = (0 if high_density_horizontal else 1) + (0 if high_density_vertical else 2)
             header = GS + b"v0" + six.int2byte(density_byte) + self._int_low_high(im.width_bytes, 2) +\
                 self._int_low_high(im.height, 2)
-            self._raw(header + im.to_raster_format())
+            self._raw(header + im.to_raster_format(invert_byte=invert_byte))
 
         if impl == "graphics":
             # GS ( L raster format graphics
@@ -225,7 +225,7 @@ class Escpos(object):
 
             # Convert the RGB image in printable image
             self.text('\n')
-            self.image(im, center=center, impl=impl)
+            self.image(im, center=center, impl=impl, invert_byte=True)
             self.text('\n')
             self.text('\n')
             return

@@ -1,7 +1,5 @@
 import sys
 
-b = sys.path
-sys.path = [ '/home/pi/Printer/python-escpos/build/lib' ] + b
 from escpos.printer import Usb, File
 
 
