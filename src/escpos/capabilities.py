@@ -12,6 +12,7 @@ import platform
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 pickle_dir = environ.get('ESCPOS_CAPABILITIES_PICKLE_DIR', gettempdir())
 pickle_path = path.join(pickle_dir, '{v}.capabilities.pickle'.format(v=platform.python_version()))

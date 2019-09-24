@@ -105,7 +105,6 @@ class EscposImage(object):
         Convert image to raster-format binary
         """
         all_bytes = self._im.tobytes()
-        print(self.width_bytes)
         if invert_byte:
             new_bytes = [ EscposImage.reverse_bits(b, 8) for b in bytearray(all_bytes) ] 
             #new_bytes = []

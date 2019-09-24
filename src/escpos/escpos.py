@@ -182,7 +182,7 @@ class Escpos(object):
         self._raw(GS + b'(L' + header + m + fn + data)
 
     def qr(self, content, ec=QR_ECLEVEL_L, size=3, model=QR_MODEL_2,
-           native=False, center=False, impl="bitImageRaster"):
+           native=False, center=False, impl="bitImageRaster", invert_byte=False):
         """ Print QR Code for the provided string
 
         :param content: The content of the code. Numeric data will be more efficiently compacted.
@@ -217,6 +217,7 @@ class Escpos(object):
                 QR_ECLEVEL_M: qrcode.constants.ERROR_CORRECT_M,
                 QR_ECLEVEL_Q: qrcode.constants.ERROR_CORRECT_Q
             }
+
             qr_code = qrcode.QRCode(version=None, box_size=size, border=1, error_correction=python_qr_ec[ec])
             qr_code.add_data(content)
             qr_code.make(fit=True)
@@ -225,7 +226,7 @@ class Escpos(object):
 
             # Convert the RGB image in printable image
             self.text('\n')
-            self.image(im, center=center, impl=impl, invert_byte=True)
+            self.image(im, center=center, impl=impl, invert_byte=invert_byte)
             self.text('\n')
             self.text('\n')
             return
