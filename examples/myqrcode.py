@@ -42,8 +42,10 @@ if __name__ == '__main__':
 
     #max_width = int(p.profile.profile_data['media']['width']['pixels'])
 
-    qr_code = qrcode.QRCode(version=5, box_size=6, border=4, error_correction=QR_ECLEVEL_L)
+    qr_code = qrcode.QRCode(version=None, box_size=6, border=1, error_correction=QR_ECLEVEL_H)
     qr_code.add_data(content)
+    qr_code.make(fit=True)
+
     qr_img = qr_code.make_image()
     im = qr_img._img.convert("RGB")
 
