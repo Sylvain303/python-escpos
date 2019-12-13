@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 from escpos.printer import File
 from escpos.constants import ESC, GS, NUL, QR_ECLEVEL_L, QR_ECLEVEL_M, QR_ECLEVEL_H, QR_ECLEVEL_Q
