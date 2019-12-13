@@ -9,6 +9,9 @@ def usage():
     """
     Usage: mybarcode.py <content> <dest_file>
 
+    Options:
+      -r    reverse bit order in bytes.
+
     Arguments:
       <dest_file>   a file name or - for stdout
                     ex: /dev/usb/lp0
@@ -21,9 +24,14 @@ if __name__ == '__main__':
         usage()
         sys.exit(1)
 
-    content = sys.argv[1]
-    dest    = sys.argv[2]
-        
+    reverse = False
+    if sys.argv[1] == "-r":
+        reverse = True
+        content = sys.argv[2]
+        dest    = sys.argv[3]
+    else:
+        content = sys.argv[1]
+        dest    = sys.argv[2]
     if dest == '-':
         dest = '/dev/stdout'
 
@@ -55,7 +63,7 @@ if __name__ == '__main__':
     im = my_code.writer._image
 
     p.text('\n')
-    p.image(im, center=True, invert_byte=True, impl='bitImageRaster')
+    p.image(im, center=True, invert_byte=reverse, impl='bitImageRaster')
     p.text('\n')
     p.text('\n')
 
